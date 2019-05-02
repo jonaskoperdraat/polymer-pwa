@@ -1,0 +1,8 @@
+john:
+  password: secret
+  firstName: John
+  lastName: Doe
+jonas:
+  password: secret2
+  firstName: Jonas
+  lastName: Koperdraat
