@@ -59,6 +59,17 @@ class LoginView extends connect(store)(PageViewElement) {
     this._password = '';
 
     // Here, we could query the credential manager API to retrieve username and password for the user.
+    if (window.PasswordCredential || window.FederatedCredential) {
+      navigator.credentials.get({password: true}).then((credential) => {
+        console.log('Received credentials', credential);
+        if (credential) {
+          this._username = credential.id;
+          this._password = credential.password;
+          // We could automatically log the user in.
+          // store.dispatch(logIn(credential.id, credential.password));
+        }
+      });
+    }
   }
 
   _submit(e) {
@@ -75,18 +86,6 @@ class LoginView extends connect(store)(PageViewElement) {
       store.dispatch(logIn(username, password));
 
       return false;
-  }
-
-  _logIn() {
-    // This is where the app would attempt to login with the provided credentials.
-    // If successful, dispatch a logInSuccess action
-    // Also, store credentials using credential manager API
-    // If unsuccessful, dispatch a logInError action
-    store.dispatch(logInSuccess());
-  }
-
-  _logInError() {
-    store.dispatch(logInError('Something went wrong'));
   }
 
   stateChanged(state) {

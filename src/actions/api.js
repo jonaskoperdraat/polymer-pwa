@@ -24,6 +24,19 @@ export const logIn = (username, password) => async (dispatch, getState) => {
                         jwt: data.jwt
                     });
                 });
+                if (window.PasswordCredential) {
+                    console.log('Attempting to store credentials.');
+                    // Call navigator.credentials.get() to retrieve stored
+                    // PasswordCredentials or FederatedCredentials.
+                    const credential = new PasswordCredential({
+                        name: 'polymer-pwa',
+                        id: username,
+                        password: password
+                    });
+                    navigator.credentials.store(credential).then(function(creds) {
+                        console.log('Stored credentials', creds);
+                    });
+                }
             }
         }).catch(function (err) {
         console.log('Fetch error', err);
