@@ -13,8 +13,6 @@ export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
-export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
-export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const LOG_OUT = 'LOG_OUT';
 
 export const navigate = (path) => (dispatch) => {
@@ -56,12 +54,6 @@ const updatePage = (page) => {
     type: UPDATE_PAGE,
     page
   };
-};
-
-export const logInSuccess = () => {
-  return {
-    type: LOG_IN_SUCCESS
-  }
 };
 
 export const logInError = (msg) => {

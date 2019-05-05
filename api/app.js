@@ -97,7 +97,7 @@ function sendToken(res, payload) {
     console.log('token', token);
 
     res.status(200)
-        .send(token)
+        .send({ jwt: token })
         .end();
 }
 

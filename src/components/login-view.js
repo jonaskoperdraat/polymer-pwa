@@ -14,13 +14,16 @@ import { PageViewElement } from './page-view-element.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 import {store} from "../store";
-import {logInSuccess, logInError} from "../actions/app.js";
+// import {logInSuccess, logInError} from "../actions/app.js";
+import { logIn } from '../actions/api.js'
 import {connect} from "pwa-helpers";
 
 class LoginView extends connect(store)(PageViewElement) {
   static get properties() {
     return {
-      _errorMsg: { type: String }
+      _errorMsg: { type: String },
+      _username: { type: String },
+      _password: { type: String }
     };
   }
 
@@ -34,8 +37,16 @@ class LoginView extends connect(store)(PageViewElement) {
     console.log('LoginView.render');
     // Obviously, this needs username and password fields
     return html`
-      <button @click="${this._logIn}" title="Log in">Log in successfully</button>
-      <button @click="${this._logInError}" title="Log in">Log in error</button>
+        <form @submit="${this._submit}">
+            <label>Username
+                <input name="username" type="text" value="${this._username}"/>
+            </label><br />
+            <label>Password
+                <input name="password" type="password" value="${this._password}" />
+            </label><br />
+            <button type="submit" title="Log in">Log in</button>
+        </form>
+    
       <p style="${this._errorMsg ? '' : 'display: none'}">${this._errorMsg}</p>
     `;
   }
@@ -43,9 +54,27 @@ class LoginView extends connect(store)(PageViewElement) {
   constructor() {
     console.log('LoginView.constructor()');
     super();
-    this._errorMsg = 'bla';
+    this._errorMsg = '';
+    this._username = '';
+    this._password = '';
 
     // Here, we could query the credential manager API to retrieve username and password for the user.
+  }
+
+  _submit(e) {
+      console.log('try loggin in w/ username and password', arguments);
+
+      if (e.preventDefault)
+          e.preventDefault();
+
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+
+      console.log(username, password);
+
+      store.dispatch(logIn(username, password));
+
+      return false;
   }
 
   _logIn() {
@@ -61,7 +90,8 @@ class LoginView extends connect(store)(PageViewElement) {
   }
 
   stateChanged(state) {
-    this._errorMsg = state.app.logInError;
+    console.log('LoginView.stateChanged', state);
+    this._errorMsg = state.api.logInError;
   }
 
 }

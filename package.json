@@ -7,7 +7,7 @@
   "license": "BSD-3-Clause",
   "repository": "Polymer/pwa-starter-kit",
   "scripts": {
-    "start": "polymer serve",
+    "start": "polymer serve --proxy-path api --proxy-target http://localhost:8082",
     "api": "node api/app.js",
     "build": "polymer build --auto-base-path && gulp prpl-server",
     "build:static": "polymer build",

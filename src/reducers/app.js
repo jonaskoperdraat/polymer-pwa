@@ -15,7 +15,6 @@ import {
   CLOSE_SNACKBAR,
   UPDATE_DRAWER_STATE
 } from '../actions/app.js';
-import {LOG_IN_FAILURE, LOG_IN_SUCCESS, LOG_OUT} from "../actions/app";
 
 const INITIAL_STATE = {
   page: '',
@@ -29,14 +28,6 @@ const INITIAL_STATE = {
 const app = (state = INITIAL_STATE, action) => {
   console.log('actionswitch', state, action);
   switch (action.type) {
-    case LOG_IN_SUCCESS:
-    case LOG_IN_FAILURE:
-    case LOG_OUT:
-      return {
-        ...state,
-        loggedIn: action.type === LOG_IN_SUCCESS,
-        logInError: action.type === LOG_IN_FAILURE ? action.error : ''
-      };
     case UPDATE_PAGE:
       return {
         ...state,

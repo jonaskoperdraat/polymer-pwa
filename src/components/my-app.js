@@ -19,6 +19,8 @@ import { updateMetadata } from 'pwa-helpers/metadata.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
+import api from '../reducers/api.js';
+
 // These are the actions needed by this element.
 import {
   navigate,
@@ -36,6 +38,8 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import { menuIcon } from './my-icons.js';
 import './snack-bar.js';
 import('./login-view.js');
+
+store.addReducers({ api });
 
 class MyApp extends connect(store)(LitElement) {
   static get properties() {
@@ -289,11 +293,12 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
+    console.log('my-app.stateChanged', state);
     this._page = state.app.page;
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
     this._drawerOpened = state.app.drawerOpened;
-    this._loggedIn = state.app.loggedIn;
+    this._loggedIn = state.api.loggedIn;
   }
 }
 
