@@ -23,7 +23,8 @@ import { store } from '../store.js';
 import {
   navigate,
   updateOffline,
-  updateDrawerState
+  updateDrawerState,
+  logOut
 } from '../actions/app.js';
 
 // These are the elements needed by this element.
@@ -31,8 +32,10 @@ import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+
 import { menuIcon } from './my-icons.js';
 import './snack-bar.js';
+import('./login-view.js');
 
 class MyApp extends connect(store)(LitElement) {
   static get properties() {
@@ -41,7 +44,8 @@ class MyApp extends connect(store)(LitElement) {
       _page: { type: String },
       _drawerOpened: { type: Boolean },
       _snackbarOpened: { type: Boolean },
-      _offline: { type: Boolean }
+      _offline: { type: Boolean },
+      _loggedIn: { type: Boolean }
     };
   }
 
@@ -193,7 +197,13 @@ class MyApp extends connect(store)(LitElement) {
 
   render() {
     // Anything that's related to rendering should be done in here.
-    return html`
+    console.log('render. _page:', this._page, 'loggedIn: ', this._loggedIn);
+    if (!this._loggedIn) {
+      return html`
+        <login-view class="page" active></login-view>
+      `
+    } else {
+      return html`
       <!-- Header -->
       <app-header condenses reveals effects="waterfall">
         <app-toolbar class="toolbar-top">
@@ -206,6 +216,7 @@ class MyApp extends connect(store)(LitElement) {
           <a ?selected="${this._page === 'view1'}" href="/view1">View One</a>
           <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
           <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+          <a href="#" @click="${this._logOut}" title="Log out">Log out</a>
         </nav>
       </app-header>
 
@@ -217,6 +228,7 @@ class MyApp extends connect(store)(LitElement) {
           <a ?selected="${this._page === 'view1'}" href="/view1">View One</a>
           <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
           <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+          <a href="#" @click="${this._logOut}" title="Log out">Log out</a>
         </nav>
       </app-drawer>
 
@@ -236,6 +248,7 @@ class MyApp extends connect(store)(LitElement) {
         You are now ${this._offline ? 'offline' : 'online'}.
       </snack-bar>
     `;
+    }
   }
 
   constructor() {
@@ -271,11 +284,16 @@ class MyApp extends connect(store)(LitElement) {
     store.dispatch(updateDrawerState(e.target.opened));
   }
 
+  _logOut() {
+    store.dispatch(logOut());
+  }
+
   stateChanged(state) {
     this._page = state.app.page;
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
     this._drawerOpened = state.app.drawerOpened;
+    this._loggedIn = state.app.loggedIn;
   }
 }
 

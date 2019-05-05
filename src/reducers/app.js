@@ -15,16 +15,31 @@ import {
   CLOSE_SNACKBAR,
   UPDATE_DRAWER_STATE
 } from '../actions/app.js';
+import {LOG_IN_FAILURE, LOG_IN_SUCCESS, LOG_OUT} from "../actions/app";
+
+// TODO: Store the app state in local storage
+// See: https://pwa-starter-kit.polymer-project.org/redux-and-state-management#replicating-the-state-for-storage
 
 const INITIAL_STATE = {
   page: '',
   offline: false,
   drawerOpened: false,
   snackbarOpened: false,
+  loggedIn : false,
+  logInError : ''
 };
 
 const app = (state = INITIAL_STATE, action) => {
+  console.log('actionswitch', state, action);
   switch (action.type) {
+    case LOG_IN_SUCCESS:
+    case LOG_IN_FAILURE:
+    case LOG_OUT:
+      return {
+        ...state,
+        loggedIn: action.type === LOG_IN_SUCCESS,
+        logInError: action.type === LOG_IN_FAILURE ? action.error : ''
+      };
     case UPDATE_PAGE:
       return {
         ...state,
