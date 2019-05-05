@@ -17,9 +17,6 @@ import {
 } from '../actions/app.js';
 import {LOG_IN_FAILURE, LOG_IN_SUCCESS, LOG_OUT} from "../actions/app";
 
-// TODO: Store the app state in local storage
-// See: https://pwa-starter-kit.polymer-project.org/redux-and-state-management#replicating-the-state-for-storage
-
 const INITIAL_STATE = {
   page: '',
   offline: false,
