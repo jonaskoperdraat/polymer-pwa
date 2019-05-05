@@ -1,3 +1,13 @@
+# POC
+This is a project forked from the PWA starter kit. I've added log in functionality against a mock api, including usage of the credentials management API.
+
+## Running
+
+Run the mock api: `npm api`
+Run the web app: `npm start`
+
+---
+
 [![Built with pwa–starter–kit](https://img.shields.io/badge/built_with-pwa–starter–kit_-blue.svg)](https://github.com/Polymer/pwa-starter-kit "Built with pwa–starter–kit")
 [![Build status](https://api.travis-ci.org/Polymer/pwa-starter-kit.svg?branch=master)](https://travis-ci.org/Polymer/pwa-starter-kit)
 
