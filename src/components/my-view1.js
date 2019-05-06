@@ -14,15 +14,39 @@ import { PageViewElement } from './page-view-element.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-class MyView1 extends PageViewElement {
+import {store} from "../store";
+import {retrieveUserDetails} from "../actions/api";
+import {connect} from "pwa-helpers";
+
+class MyView1 extends connect(store)(PageViewElement) {
+  static get properties() {
+    return {
+      _firstName: { type: String },
+      _lastName: { type: String }
+    };
+  }
+
   static get styles() {
     return [
       SharedStyles
     ];
   }
 
+  constructor() {
+    super();
+    this._firstName = '';
+    this._lastName = '';
+
+    store.dispatch(retrieveUserDetails());
+  }
+
   render() {
     return html`
+      <section>
+        <h2>User</h2>
+        <p>First name: ${this._firstName}</p>
+        <p>Last name: ${this._lastName}</p>
+      </section>
       <section>
         <h2>Static page</h2>
         <p>This is a text-only page.</p>
@@ -36,6 +60,12 @@ class MyView1 extends PageViewElement {
         <p>Vestibulum at est ex. Aenean id ligula id nibh dictum laoreet. Etiam non semper erat. Pellentesque eu justo rhoncus diam vulputate facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam feugiat metus ex, vel fringilla massa tincidunt sit amet. Nunc facilisis bibendum tristique. Mauris commodo, dolor vitae dapibus fermentum, odio nibh viverra lorem, eu cursus diam turpis et sapien. Nunc suscipit tortor a ligula tincidunt, id hendrerit tellus sollicitudin.</p>
       </section>
     `;
+  }
+
+  stateChanged(state) {
+    console.log('my-view1.stateChanged', state);
+    this._firstName = state.api.profile.firstName;
+    this._lastName = state.api.profile.lastName;
   }
 }
 
