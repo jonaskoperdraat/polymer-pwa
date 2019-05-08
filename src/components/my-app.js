@@ -201,7 +201,6 @@ class MyApp extends connect(store)(LitElement) {
 
   render() {
     // Anything that's related to rendering should be done in here.
-    console.log('render. _page:', this._page, 'loggedIn: ', this._loggedIn);
     if (!this._loggedIn) {
       return html`
         <login-view class="page" active></login-view>
@@ -293,7 +292,6 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    console.log('my-app.stateChanged', state);
     this._page = state.app.page;
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;

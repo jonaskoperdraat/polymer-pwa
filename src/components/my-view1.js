@@ -63,9 +63,10 @@ class MyView1 extends connect(store)(PageViewElement) {
   }
 
   stateChanged(state) {
-    console.log('my-view1.stateChanged', state);
-    this._firstName = state.api.profile.firstName;
-    this._lastName = state.api.profile.lastName;
+    if (state.api.profile) {
+      this._firstName = state.api.profile.firstName;
+      this._lastName = state.api.profile.lastName;
+    }
   }
 }
 

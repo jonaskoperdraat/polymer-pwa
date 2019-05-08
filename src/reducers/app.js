@@ -26,7 +26,6 @@ const INITIAL_STATE = {
 };
 
 const app = (state = INITIAL_STATE, action) => {
-  console.log('actionswitch', state, action);
   switch (action.type) {
     case UPDATE_PAGE:
       return {

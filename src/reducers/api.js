@@ -11,7 +11,6 @@ const INITIAL_STATE = {
 };
 
 const api = (state = INITIAL_STATE, action) => {
-    console.log('api.actionswitch', state, action);
     switch (action.type) {
         case LOG_IN_SUCCESS:
         case LOG_IN_FAILURE:
