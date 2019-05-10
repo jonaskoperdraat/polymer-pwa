@@ -61,13 +61,12 @@ class LoginView extends connect(store)(PageViewElement) {
     return html`
         <paper-material elevation="3">
         <form @submit="${this._submit}">
-        <paper-input label="Username" type="text" id="username" value="${this._username}" @keypress="${this._keyPressed}" tabindex="1"></paper-input>
-        <paper-input label="Password" type="password" id="password" value="${this._password}" @keypress="${this._keyPressed}" tabindex="2"></paper-input>
+        <paper-input label="Username" type="text" id="username" value="${this._username}" @keypress="${this._keyPressed}" ></paper-input>
+        <paper-input label="Password" type="password" id="password" value="${this._password}" @keypress="${this._keyPressed}" ></paper-input>
         <div>
-        <paper-button raised class="indigo" id="btnLogin" @click="${this._submit}" tabindex="3">Log in</paper-button>
+        <paper-button raised class="indigo" id="btnLogin" @click="${this._submit}" >Log in</paper-button>
         </form>
         </div>
-
         <p class="error" style="${this._errorMsg ? '' : 'display: none'}">${this._errorMsg}</p>
     </paper-material>
     `;
