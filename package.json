@@ -26,6 +26,7 @@
     "@polymer/paper-material": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "@webcomponents/webcomponentsjs": "^2.2.4",
+    "cookie-parser": "^1.4.4",
     "fs": "0.0.1-security",
     "js-yaml": "^3.13.1",
     "jsonwebtoken": "^8.5.1",

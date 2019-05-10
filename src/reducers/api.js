@@ -18,7 +18,6 @@ const api = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loggedIn: action.type === LOG_IN_SUCCESS,
-                jwt: action.type === LOG_IN_SUCCESS ? action.jwt : '',
                 logInError: action.type === LOG_IN_FAILURE ? action.error : ''
             };
         case UPDATE_USER_PROFILE:
